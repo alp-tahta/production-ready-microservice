@@ -14,13 +14,12 @@ func main() {
 	port := ":8080"
 
 	logger := logger.Init()
-	// logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
-	logger.Info("Starting HTTP server at", "port", port)
 
 	mux := http.NewServeMux()
 	handler := handler.New(logger)
 	routes.RegisterRoutes(mux, handler)
 
+	logger.Info("Starting HTTP server at", "port", port)
 	err := server.Init(port, mux)
 	if err != nil {
 		logger.Error("Failed to start HTTP server", "error", err)
